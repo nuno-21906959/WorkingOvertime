@@ -1,15 +1,3 @@
-/**********************************************
-* Description:
-* UDP Client
-*
-* Version:
-* 03.2020
-*
-* Author:
-* Jose G. Faisca <jose.faisca@ulusofona.pt>
-*
-***********************************************/
-
 import java.net.*;
 import java.util.*;
 

@@ -1,15 +1,3 @@
-/**********************************************
-* Description:
-* TCP Server
-*  
-* Version: 
-* 03.2020
-*  
-* Author: 
-* Jose G. Faisca <jose.faisca@ulusofona.pt>
-*  
-***********************************************/
-
 import java.lang.reflect.Array;
 import java.net.*;
 import java.text.*;
@@ -339,22 +327,6 @@ public class Server {
 
 					}
 
-					/*if (messageIn.equalsIgnoreCase("frase")) {
-					    output.println(sentences[rand(0,sentences.length-1)]);
-					} else if (messageIn.equalsIgnoreCase("listar")) {
-						messageOut = Arrays.toString(sentences); 
-						output.println(messageOut);
-					} else if (messageIn.equalsIgnoreCase("data")) {
-		                Date date = new Date();
-						messageOut = dateFormat.format(date); 
-						output.println(messageOut);	
-					} else if (messageIn.equalsIgnoreCase("horas")) {
-		                Date date = new Date();
-						messageOut = timeFormat.format(date);
-						output.println(messageOut);		
-					} else {
-						output.println("comando desconhecido!");
-					}	*/
 				} 
 				input.close(); 
 				output.close();
@@ -365,10 +337,7 @@ public class Server {
 			}					
 		}  
 	}
-	
-    public static int rand(int min,int max){
-        return min + (int)(Math.random() * ((max - min) + 1));
-    }	
+
 }
 
 
