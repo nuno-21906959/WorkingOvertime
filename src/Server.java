@@ -16,7 +16,7 @@ import java.text.*;
 import java.util.*;
 import java.io.*;
 
-public class TCPServer {
+public class Server {
 	
 	private static final int TCPport = 7142;
 	private static final int UDPport = 9031;
