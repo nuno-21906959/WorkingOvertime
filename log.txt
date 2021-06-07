@@ -1,0 +1,25 @@
+[Mon Jun 07 20:39:53 BST 2021] O cliente [127.0.0.1] conectou-se com sucesso!
+[Mon Jun 07 20:41:33 BST 2021] DESKTOP-BOQELHC/192.168.1.64:7142/TCP
+[Mon Jun 07 20:41:33 BST 2021] DESKTOP-BOQELHC/192.168.1.64:9031/UDP
+[Mon Jun 07 20:41:34 BST 2021] O cliente [127.0.0.1] conectou-se com sucesso!
+[Mon Jun 07 20:41:34 BST 2021] Nova conexão com [127.0.0.1]
+[Mon Jun 07 20:41:38 BST 2021] 127.0.0.1: Thread-0: 1
+[Mon Jun 07 20:41:39 BST 2021] 127.0.0.1: Thread-0: 0
+[Mon Jun 07 20:41:42 BST 2021] 127.0.0.1: Thread-0: 4
+[Mon Jun 07 20:41:42 BST 2021] 127.0.0.1: Thread-0: 5
+[Mon Jun 07 20:44:22 BST 2021] TCP >DESKTOP-BOQELHC/192.168.1.64:7142
+[Mon Jun 07 20:44:22 BST 2021] UDP >DESKTOP-BOQELHC/192.168.1.64:9031
+[Mon Jun 07 20:44:24 BST 2021] O cliente [127.0.0.1] conectou-se com sucesso!
+[Mon Jun 07 20:44:25 BST 2021] 127.0.0.1: Thread-0: 0
+[Mon Jun 07 20:44:27 BST 2021] 127.0.0.1: Thread-0: 1
+[Mon Jun 07 20:51:12 BST 2021] TCP> DESKTOP-BOQELHC/192.168.1.64:7142
+[Mon Jun 07 20:51:12 BST 2021] UDP> DESKTOP-BOQELHC/192.168.1.64:9031
+[Mon Jun 07 20:51:16 BST 2021] O cliente [127.0.0.1] conectou-se com sucesso!
+[Mon Jun 07 20:51:21 BST 2021] 127.0.0.1: Thread-0: 0
+[Mon Jun 07 20:51:21 BST 2021] Enviado menu para > 127.0.0.1
+[Mon Jun 07 20:51:37 BST 2021] 127.0.0.1: Thread-0: 1
+[Mon Jun 07 20:51:37 BST 2021] Enviada a lista de online para > 127.0.0.1
+[Mon Jun 07 20:51:38 BST 2021] 127.0.0.1: Thread-0: 2
+[Mon Jun 07 20:51:42 BST 2021] O User > 127.0.0.1 enviou a mensagem "ola" para o User > /127.0.0.1
+[Mon Jun 07 20:53:50 BST 2021] TCP> DESKTOP-BOQELHC/192.168.1.64:7142
+[Mon Jun 07 20:53:50 BST 2021] UDP> DESKTOP-BOQELHC/192.168.1.64:9031
