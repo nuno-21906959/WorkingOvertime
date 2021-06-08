@@ -26,7 +26,6 @@ public class TCPClient {
 
 
 	private static void out (String mensagem){
-
 		if (!termos.contains(mensagem)){
 			System.out.println(mensagem);
 		}

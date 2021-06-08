@@ -5,7 +5,6 @@ import java.util.*;
 import java.io.*;
 
 public class Server {
-	
 	private static final int TCPport = 7142;
 	private static final int UDPport = 9031;
 	private static DatagramSocket datagramSocket;
@@ -13,14 +12,6 @@ public class Server {
 	private static byte[] buffer;
 	private static InetAddress clientIP;
 	private static ArrayList<InetAddress> listaOnline = new ArrayList<>();
-	private static String menu = "[MENU CLIENTE]\n" +
-			"0 \t–> Menu Inicial\n" +
-			"1 \t–> Listar utilizadores online\n" +
-			"2 \t–> Enviar mensagem a um utilizador\n" +
-			"3 \t–> Enviar mensagem a todos os utilizadores\n" +
-			"4 \t–> lista branca de utilizadores\n" +
-			"5 \t–> lista negra de utilizadores\n" +
-			"99 \t–> Sair";
 	static String PATH_LISTABRANCA = "res/listabranca.txt";
 	static String PATH_LISTANEGRA = "res/listanegra.txt";
 
@@ -114,10 +105,6 @@ public class Server {
 		return s;
 	}
 
-	private static InetAddress obterIP(String user, ArrayList<String> listaOnline ) throws UnknownHostException {
-				return InetAddress.getByName(listaOnline.get(Integer.parseInt(user)));
-	}
-
 	private static void enviaMensagem(String user, String mensagem, DatagramSocket datagramSocket, DatagramPacket outPacket, ArrayList<InetAddress> listaOnline, boolean todos) throws UnknownHostException {
 
 		String m = clientIP + " - "+ mensagem;
@@ -170,7 +157,6 @@ public class Server {
 		InetAddress myIPaddress = InetAddress.getLocalHost();
 		Socket client = null;
 		datagramSocket = new DatagramSocket(UDPport);
-		boolean feito = false;
 
 		out("TCP> " + myIPaddress.toString() + ":" + TCPport);
 		out("UDP> " + myIPaddress.toString() + ":" + UDPport);
@@ -246,7 +232,7 @@ public class Server {
 							f = listaIPParaString(listaOnline,messageIn);
 							output.print(f);
 							output.println("over");
-							out("Enviada a lista de online para > "+ clientIP.toString().replace("/",""));
+							out("Enviada a lista de online para ["+ clientIP.toString().replace("/","")+"]");
 							break;
 						case "2":
 							output.println("comando valido");
@@ -281,7 +267,7 @@ public class Server {
 
 							output.println("Ok, mensagem enviada ao user "+user+".");
 							output.println("over");
-							out("O User > "+ clientIP.toString().replace("/","")+" enviou a mensagem \""+mensagem+"\" para o User ["
+							out("O User ["+ clientIP.toString().replace("/","")+"] enviou a mensagem \""+mensagem+"\" para o User ["
 									+ listaOnline.get(Integer.parseInt(user)).toString().replace("/","")+"]");
 							break;
 						case "3":
