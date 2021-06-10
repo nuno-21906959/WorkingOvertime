@@ -2,8 +2,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class TCPClient {	
-	
+public class TCPClient {
+
 	private static final int port = 7142;
 	private static BufferedReader input;
 	private static PrintStream output;
@@ -42,7 +42,12 @@ public class TCPClient {
 
 		String host = args[0];
 		String messageOut, messageIn = null;
-		Socket client = new Socket(host,port);
+		Socket client = null;
+		try {client = new Socket(host,port);
+		} catch (ConnectException e){
+			System.out.print("O Servidor está offline...");
+			return;
+		}
 		input = new BufferedReader(
 				new InputStreamReader(client.getInputStream()));
 		output = new PrintStream(
@@ -51,7 +56,7 @@ public class TCPClient {
 
 
 
-		while(true) {			
+		while(true) {
 			Scanner scan = new Scanner (System.in);
 
 			if (!feito){
@@ -75,10 +80,16 @@ public class TCPClient {
 				System.out.print(">");
 				messageOut = scan.nextLine();
 				try{
-				output.println(messageOut);
-				messageIn = input.readLine();
-				out(messageIn);
+					output.println(messageOut);
+					messageIn = input.readLine();
+					out(messageIn);
 				} catch (SocketException e){
+					if (messageOut.equals("99")){
+						System.out.print("O Servidor já se encontra offline..\nA fechar..");
+						input.close();
+						output.close();
+						return;
+					}
 					int timer = 10;
 					System.out.print("A tentar reestabelecer ligação ao servidor");
 					while (timer > 0) {
@@ -88,17 +99,24 @@ public class TCPClient {
 							System.out.print(".");
 						}
 						if (timer == 0){
+							try {
+								client = new Socket(host,port);
+							} catch (ConnectException ce){
+								System.out.println("\nImpossível estabelecer conexão!\nA fechar..");
+								input.close();
+								output.close();
+								return;
+							}
 							System.out.println("\nConexão restabelecida!");
-							client.close();
 							input.close();
 							output.close();
-							client = new Socket(host,port);
 							input = new BufferedReader(
 									new InputStreamReader(client.getInputStream()));
 							output = new PrintStream(
 									client.getOutputStream(),true);
 							input.readLine();
 							input.readLine();
+
 						}
 					}
 				}
@@ -109,14 +127,14 @@ public class TCPClient {
 			switch(opcao) {
 				case "99":
 					do {
-					messageIn = input.readLine();
-					out(messageIn);
-					if (messageIn.equals("fechar")){
-						input.close();
-						output.close();
-						client.close();
+						messageIn = input.readLine();
+						out(messageIn);
+						if (messageIn.equals("fechar")){
+							input.close();
+							output.close();
+							client.close();
 
-					}
+						}
 					} while (!messageIn.equals("fechar"));
 					return;
 				case "0":
@@ -147,9 +165,9 @@ public class TCPClient {
 							messageIn = input.readLine();
 							out(messageIn);
 							if (!termos.contains(messageIn)){
-							System.out.print(">");
-							messageOut = scan.nextLine();
-							output.println(messageOut);
+								System.out.print(">");
+								messageOut = scan.nextLine();
+								output.println(messageOut);
 							}
 						}while(!termos.contains(messageIn));
 

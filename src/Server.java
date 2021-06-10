@@ -75,7 +75,7 @@ public class Server {
 
 		switch (opcao){
 			case "1":
-				s += ("Users online ("+listaOnline.size()+"):\n");
+				s += ("Utilizadores online ("+listaOnline.size()+"):\n");
 		}
 
 		for (InetAddress elemento: lista){
@@ -107,7 +107,7 @@ public class Server {
 
 	private static void enviaMensagem(String user, String mensagem, DatagramSocket datagramSocket, DatagramPacket outPacket, ArrayList<InetAddress> listaOnline, boolean todos) throws UnknownHostException {
 
-		String m = clientIP + " - "+ mensagem;
+		String m = "["+clientIP.toString().replace("/","") + "]: "+ mensagem;
 
 		if (!todos){
 			InetAddress inetadress = listaOnline.get(Integer.parseInt(user));
@@ -188,10 +188,10 @@ public class Server {
 				listaOnline.add(clientIP);
 			}
 
-			Thread t = new Thread(new EchoClientThread(client));                             
-			t.start();			
-		}		
-	}	
+			Thread t = new Thread(new EchoClientThread(client));
+			t.start();
+		}
+	}
 
 	public static class EchoClientThread implements Runnable{
 
@@ -206,13 +206,13 @@ public class Server {
 			String clientIP = s.getInetAddress().toString();
 			//out("Nova conexão com [" + clientIP.toString().replace("/","")+"]");
 
-			try {				
+			try {
 				BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
 				PrintStream output = new PrintStream(s.getOutputStream(),true);
 				String messageIn = null, messageOut = null;
 				boolean sai = false;
 
-				while ((messageIn = input.readLine()) !=null) {				
+				while ((messageIn = input.readLine()) !=null) {
 					out(clientIP.toString().replace("/","")+": "+threadName+": "+messageIn);
 
 
@@ -221,6 +221,7 @@ public class Server {
 							output.println("comando valido");
 							output.println("Vai ser desconectado!\nA sair...");
 							output.println("fechar");
+							listaOnline.remove(clientIP);
 							out("O cliente "+ clientIP.toString().replace("/","")+" desconectou-se...");
 							break;
 						case "0":
@@ -252,20 +253,21 @@ public class Server {
 								}
 							}while ( !sai );
 
-							sai = false;
+							boolean sai2 = false;
+							output.print("Mensagem: \n");
 							do {	/* ciclo ate o cliente enviar um mensagem (só ENTER n dá) */
-								output.print("Mensagem: \n");
-								 mensagem = input.readLine();
-								 boolean check = mensagem.length() > 0;
-								 if ( check ){
-								 	output.println("mensagem valida");
-								 } else {
-								 	sai = true;
-								 }
-							} while (sai);
+								mensagem = input.readLine();
+								boolean check = mensagem.isBlank();
+								if ( check ){
+									output.println("Indique uma mensagem válida");
+								} else {
+									output.println("mensagem valida");
+									sai2 = true;
+								}
+							} while (! sai2);
 							enviaMensagem(user, mensagem, datagramSocket, outPacket, listaOnline,false);
 
-							output.println("Ok, mensagem enviada ao user "+user+".");
+							output.println("Ok, mensagem enviada ao utilizador ["+listaOnline.get(Integer.parseInt(user)).toString().replace("/","")+"].");
 							output.println("over");
 							out("O User ["+ clientIP.toString().replace("/","")+"] enviou a mensagem \""+mensagem+"\" para o User ["
 									+ listaOnline.get(Integer.parseInt(user)).toString().replace("/","")+"]");
@@ -285,9 +287,9 @@ public class Server {
 							} while (sai);
 							enviaMensagem("", mensagem, datagramSocket, outPacket, listaOnline,true);
 
-							output.println("Ok, mensagem enviada a todos os users.");
+							output.println("Ok, mensagem enviada a todos os utilizadores.");
 							output.println("over");
-							out("O User ["+ clientIP.toString().replace("/","")+"] enviou a mensagem \""+mensagem+"\" para todos os Users");
+							out("O utilizador ["+ clientIP.toString().replace("/","")+"] enviou a mensagem \""+mensagem+"\" para todos os utilizadores");
 							break;
 						case "4":
 							listaBranca = carregarListas(PATH_LISTABRANCA);
@@ -307,23 +309,21 @@ public class Server {
 							break;
 						default :
 							output.println("Comando inválido.");
-							out("O User ["+ clientIP.toString().replace("/","")+"] escolheu um comando inválido ("+messageIn+")");
+							out("O utilizador ["+ clientIP.toString().replace("/","")+"] escolheu um comando inválido ("+messageIn+")");
 							break;
 
 
 					}
 
-				} 
-				input.close(); 
+				}
+				input.close();
 				output.close();
-				s.close();							
+				s.close();
 			}
 			catch (Exception ex){
 				ex.printStackTrace();
-			}					
-		}  
+			}
+		}
 	}
 
 }
-
-
